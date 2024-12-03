@@ -8,7 +8,15 @@ module.exports.registerUser = async (req, res, next) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
+  const isUserAlreadyRegistered = await userModal.findOne({
+    email: req.body.email,
+  });
+  if (isUserAlreadyRegistered) {
+    return res.status(400).json({ message: "User already registered" });
+  }
+
   const { fullname, email, password } = req.body;
+
   const hashPassword = await userModal.hashPassword(password);
   const user = await userService.createUser({
     firstname: fullname.firstname,
@@ -47,6 +55,6 @@ module.exports.getUserProfile = async (req, res, next) => {
 module.exports.logoutUser = async (req, res, next) => {
   res.clearCookie("token");
   const token = req.cookies.token || req.headers.authorization.split(" ")[1];
-  await blackList.create({ token });                                  
+  await blackList.create({ token });
   res.status(200).json({ message: "User logged out" });
 };
