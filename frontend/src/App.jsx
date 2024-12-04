@@ -11,6 +11,7 @@ import { UserProtectedWrapper } from "./pages/UserProtectedWrapper";
 import UserLogout from "./pages/UserLogout";
 import { CaptainProtectedWrapper } from "./pages/CaptainProtectedWrapper";
 import CaptainLogout from "./pages/CaptainLogout";
+import "./App.css";
 
 const App = () => {
   return (
