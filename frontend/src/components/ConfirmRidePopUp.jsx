@@ -1,13 +1,16 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const RidePopUp = ({
-  ridePopUpPanelRef,
-  setRidePopUp,
+const ConfirmRidePopUp = ({
+  confirmRidePopUpPanelRef,
   setConfirmRidePopUp,
 }) => {
   let imgurl =
     "https://static.vecteezy.com/system/resources/previews/019/879/186/non_2x/user-icon-on-transparent-background-free-png.png";
 
+  const submitHandler = (e) => {
+    e.preventDefault();
+  };
   return (
     <>
       <h5 className="p-3 text-center w-[93%] absolute top-0 ">
@@ -15,7 +18,7 @@ const RidePopUp = ({
       </h5>
 
       <h3 className=" text-center font-semibold text-2xl mt-5 mb-5">
-        New Ride Available!
+        Confirm This Ride To Start!
       </h3>
       <div className=" mb-2 flex item-center justify-between  p-3 gap-5  w-full border-2 rounded-xl bg-gray-200  ">
         <div className="flex ">
@@ -57,23 +60,34 @@ const RidePopUp = ({
             </div>
           </div>
         </div>
-        <div className="flex items-center justify-between w-full">
+        <div className="w-[95%] flex flex-col gap-4 mt-4">
+          <form
+            onSubmit={(e) => {
+              submitHandler(e);
+            }}
+          >
+            <input
+              type="text"
+              className=" font-mono bg-[#eeeeee] px-5 py-2 text-lg rounded-lg w-full mt-3"
+              placeholder="Enter OTP"
+            />
+          </form>
+          <Link
+            className="text-center p-2 rounded-lg w-full bg-[#10b461] font-semibold text-white text-xl "
+            to="/captain-riding"
+            onClick={() => {
+              setConfirmRidePopUp(false);
+            }}
+          >
+            Confirm
+          </Link>
           <button
             onClick={() => {
-              setRidePopUp(false);
+              setConfirmRidePopUp(false);
             }}
-            className=" p-2 px-5 rounded-lg  bg-red-500 font-semibold text-white text-xl "
+            className=" p-2 rounded-lg w-full bg-red-500 font-semibold text-white text-xl "
           >
-            Ignore
-          </button>
-          <button
-            onClick={() => {
-              setRidePopUp(false);
-              setConfirmRidePopUp(true);
-            }}
-            className=" p-2 px-5 rounded-lg  bg-[#10b461] font-semibold text-white text-xl "
-          >
-            Accept
+            Cancel
           </button>
         </div>
       </div>
@@ -81,4 +95,4 @@ const RidePopUp = ({
   );
 };
 
-export default RidePopUp;
+export default ConfirmRidePopUp;

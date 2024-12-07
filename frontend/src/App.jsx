@@ -13,6 +13,7 @@ import { CaptainProtectedWrapper } from "./pages/CaptainProtectedWrapper";
 import CaptainLogout from "./pages/CaptainLogout";
 import "./App.css";
 import Riding from "./components/Riding";
+import CaptainRiding from "./pages/CaptainRiding";
 
 const App = () => {
   return (
@@ -33,6 +34,14 @@ const App = () => {
             // <UserProtectedWrapper>
             <Riding />
             // </UserProtectedWrapper>
+          }
+        />
+        <Route
+          path="/captain-riding"
+          element={
+            // <CaptainProtectedWrapper>
+            <CaptainRiding />
+            /* </CaptainProtectedWrapper> */
           }
         />
         <Route
