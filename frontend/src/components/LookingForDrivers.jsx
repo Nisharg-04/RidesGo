@@ -1,6 +1,13 @@
 import React from "react";
 
-const LookingForDrivers = ({ lookingForDriverRef, image }) => {
+const LookingForDrivers = ({
+  lookingForDriverRef,
+  image,
+  pickUp,
+  destination,
+  fare,
+  createRide,
+}) => {
   let imgurl = "";
   if (image === "car") {
     imgurl =
@@ -13,10 +20,7 @@ const LookingForDrivers = ({ lookingForDriverRef, image }) => {
       "https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,h_368,w_552/v1648431773/assets/1d/db8c56-0204-4ce4-81ce-56a11a07fe98/original/Uber_Auto_558x372_pixels_Desktop.png";
   }
   return (
-    <div
-      ref={lookingForDriverRef}
-      className="z-10 w-full fixed bottom-0 translate-y-full px-3 py-8 bg-white"
-    >
+    <>
       <h5 className="p-3 text-center w-[93%] absolute top-0 ">
         <i className=" font-bold text-xl text-gray-200  ri-git-commit-fill"></i>
       </h5>
@@ -30,30 +34,26 @@ const LookingForDrivers = ({ lookingForDriverRef, image }) => {
           <div className="flex items-center gap-2  p-3 mb-2  border-b-2">
             <i className="text-xl ri-map-pin-user-line"></i>
             <div>
-              <h3 className="text-lg font-medium">51651 2nd Cross Rd,</h3>
-              <p className="text-sm -mt-1 text-gray-600"> 2nd Block, . Nagar</p>
+              <h3 className="text-sm font-medium">{`${pickUp}`}</h3>
+              
             </div>
           </div>
           <div className="flex items-center gap-2   p-3  mb-2 border-b-2">
             <i className="text-xl ri-map-pin-user-fill"></i>
             <div>
-              <h3 className="text-lg font-medium">561/15 2nd Cross Rd,</h3>
-              <p className="text-sm -mt-1 text-gray-600">
-                {" "}
-                2nd Block, R.T. Nagar
-              </p>
+              <h3 className="text-sm font-medium">{`${destination}`}</h3>
             </div>
           </div>
           <div className="flex items-center gap-2   p-3  mb-2 ">
             <i className="text-xl ri-cash-line"></i>
             <div>
-              <h3 className="text-lg font-medium">193.53</h3>
-              <p className="text-sm -mt-1 text-gray-600"> Cash Payment</p>
+              <h3 className="text-sm font-medium">{`${fare}`}</h3>
+              <p className="text-xs -mt-1 text-gray-600"> Cash Payment</p>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

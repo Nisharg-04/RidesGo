@@ -1,7 +1,9 @@
-import React from "react";
-
+import React, { useContext } from "react";
+import { CaptainDataContext } from "../context/CaptainContext";
 const CaptainDetails = () => {
-    let imgurl =
+  const { captain } = useContext(CaptainDataContext);
+  // console.log(captain);
+  let imgurl =
     "https://static.vecteezy.com/system/resources/previews/019/879/186/non_2x/user-icon-on-transparent-background-free-png.png";
 
   return (
@@ -13,7 +15,7 @@ const CaptainDetails = () => {
         <div className="flex  ">
           <img className="h-12" src={`${imgurl}`} alt="" />
           <div className="">
-            <div className="text-lg font-medium">Sarthak</div>
+            <div className="text-lg font-medium">{`${captain.fullname.firstname} ${captain.fullname.lastname}`}</div>
             <div className="text-gray-600 text-xs">Maruti Suzuki Wagon R</div>
           </div>
         </div>

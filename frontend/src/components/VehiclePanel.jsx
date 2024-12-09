@@ -5,6 +5,9 @@ const VehiclePanel = ({
   setVehiclePanel,
   setconfirmVehiclePanel,
   setImage,
+  fare,
+  setVehicleType,
+  setFinalFare,
 }) => {
   return (
     <div
@@ -27,6 +30,8 @@ const VehiclePanel = ({
           setconfirmVehiclePanel(true);
           setVehiclePanel(false);
           setImage("car");
+          setVehicleType("car");
+          setFinalFare(fare.car);
         }}
         className="flex w-full p-3  mb-2 items-center justify-between border-2 active:border-black rounded-xl"
       >
@@ -47,13 +52,15 @@ const VehiclePanel = ({
             Afforadble, compact rides
           </p>
         </div>
-        <h2 className="text-xl font-semibold">₹193.20</h2>
+        <h2 className="text-xl font-semibold">{`₹${fare.car}`}</h2>
       </div>
       <div
         onClick={() => {
           setconfirmVehiclePanel(true);
           setVehiclePanel(false);
           setImage("bike");
+          setVehicleType("motorcycle");
+          setFinalFare(fare.motorcycle);
         }}
         className="flex w-full p-3 mb-2 items-center justify-between border-2 active:border-black rounded-xl"
       >
@@ -74,13 +81,15 @@ const VehiclePanel = ({
             Afforadble motorcycle rides
           </p>
         </div>
-        <h2 className="text-xl font-semibold">₹193.20</h2>
+        <h2 className="text-xl font-semibold">{`₹${fare.motorcycle}`}</h2>
       </div>
       <div
         onClick={() => {
           setconfirmVehiclePanel(true);
           setVehiclePanel(false);
           setImage("auto");
+          setVehicleType("auto");
+          setFinalFare(fare.auto);
         }}
         className="flex w-full p-3 mb-2 items-center justify-between border-2 active:border-black rounded-xl"
       >
@@ -101,7 +110,7 @@ const VehiclePanel = ({
             Afforadble Auto rides
           </p>
         </div>
-        <h2 className="text-xl font-semibold">₹193.20</h2>
+        <h2 className="text-xl font-semibold">{`₹${fare.auto}`}</h2>
       </div>
     </div>
   );

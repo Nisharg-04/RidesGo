@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const { body } = require("express-validator");
-const { createRide } = require("../controllers/ride.controller");
+const { body, query } = require("express-validator");
+const { createRide, getFare } = require("../controllers/ride.controller");
 const authMiddleware = require("../middlewares/auth.middleware");
 
 router.post(
@@ -16,6 +16,16 @@ router.post(
   ],
   authMiddleware.authUser,
   createRide
+);
+
+router.get(
+  "/get-fare",
+  [
+    query("pickup").notEmpty().withMessage("Origin is required"),
+    query("destination").notEmpty().withMessage("Destination is required"),
+  ],
+  authMiddleware.authUser,
+  getFare
 );
 
 module.exports = router;

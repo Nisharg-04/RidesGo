@@ -1,9 +1,11 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import CaptainDetails from "../components/CaptainDetails";
 import RidePopUp from "../components/RidePopUp";
+import { SocketContext } from "../context/SocketContext";
+import { CaptainDataContext } from "../context/CaptainContext";
 
 import ConfirmRidePopUp from "../components/ConfirmRidePopUp";
 
@@ -12,6 +14,16 @@ const CaptainHome = () => {
   const [confirmRidePopUp, setConfirmRidePopUp] = useState(false);
   const ridePopUpPanelRef = useRef(null);
   const confirmRidePopUpPanelRef = useRef(null);
+  const { captain } = useContext(CaptainDataContext);
+  const { sendMessage, receiveMessage } = useContext(SocketContext);
+
+  useEffect(() => {
+    console.log(captain);
+    sendMessage("join", { userId: captain._id, userType: "captain" });
+    // socket.on("ride-request", (data) => {
+    //   setRidePopUp(true);
+    // });
+  }, []);
   useGSAP(
     function () {
       if (ridePopUp) {
@@ -67,9 +79,9 @@ const CaptainHome = () => {
       </div>
 
       <div
-      ref={ridePopUpPanelRef}
-      className="z-10 w-full translate-y-full fixed bottom-0 p-3 bg-white"
-    >
+        ref={ridePopUpPanelRef}
+        className="z-10 w-full translate-y-full fixed bottom-0 p-3 bg-white"
+      >
         <RidePopUp
           ridePopUpPanelRef={ridePopUpPanelRef}
           setConfirmRidePopUp={setConfirmRidePopUp}
