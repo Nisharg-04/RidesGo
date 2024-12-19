@@ -31,25 +31,25 @@ const App = () => {
         <Route
           path="/riding"
           element={
-            // <UserProtectedWrapper>
-            <Riding />
-            // </UserProtectedWrapper>
+            <UserProtectedWrapper>
+              <Riding />
+            </UserProtectedWrapper>
           }
         />
         <Route
           path="/captain-riding"
           element={
-            // <CaptainProtectedWrapper>
-            <CaptainRiding />
-            /* </CaptainProtectedWrapper> */
+            <CaptainProtectedWrapper>
+              <CaptainRiding />
+            </CaptainProtectedWrapper>
           }
         />
         <Route
           path="/captain-home"
           element={
-            // <CaptainProtectedWrapper>
-            <CaptainHome />
-            /* </CaptainProtectedWrapper> */
+            <CaptainProtectedWrapper>
+              <CaptainHome />
+            </CaptainProtectedWrapper>
           }
         />
 

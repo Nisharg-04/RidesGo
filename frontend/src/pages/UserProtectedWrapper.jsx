@@ -21,7 +21,8 @@ export const UserProtectedWrapper = ({ children }) => {
     })
     .then((res) => {
       setUser(res.data);
-      if (res.data.user === null) {
+      // console.log(res.data);
+      if (res.data === null) {
         navigate("/login");
       }
       setIsloding(false);

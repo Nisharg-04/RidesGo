@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const { body, query } = require("express-validator");
-const { createRide, getFare } = require("../controllers/ride.controller");
+const { createRide, getFare,startRide } = require("../controllers/ride.controller");
 const authMiddleware = require("../middlewares/auth.middleware");
-
+const { confirmRide } = require("../controllers/ride.controller");
 router.post(
   "/create-ride",
   [
@@ -28,4 +28,17 @@ router.get(
   getFare
 );
 
+router.post("/confirm", [
+  body("rideId").notEmpty().withMessage("Ride ID is required"),
+  confirmRide,
+]);
+
+router.post(
+  "/start-ride",
+  [
+    body("rideId").notEmpty().withMessage("Ride ID is required"),
+    body("otp").notEmpty().withMessage("OTP is required"),
+  ],
+  startRide
+);
 module.exports = router;

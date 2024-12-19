@@ -10,7 +10,10 @@ import WaitingForDriver from "../components/WaitingForDriver";
 import axios from "axios";
 import { SocketContext } from "../context/SocketContext";
 import { UserDataContext } from "../context/UserContext";
+import { Link, useNavigate } from "react-router-dom";
+import LiveTracking from "../components/LiveTracking";
 function Home() {
+  const navigate = useNavigate();
   const [pickUp, setPickup] = useState("");
   const [destination, setDestination] = useState("");
   const [panelOpen, setPanelOpen] = useState(false);
@@ -25,6 +28,7 @@ function Home() {
   const [fare, setFare] = useState({});
   const [finalFare, setFinalFare] = useState(0);
   const [vehicleType, setVehicleType] = useState("");
+  const [ride, setRide] = useState(null);
   const panelRef = useRef(null);
   const panelCloseRef = useRef(null);
   const vehiclePanelRef = useRef(null);
@@ -33,10 +37,33 @@ function Home() {
   const waitingForDriverRef = useRef(null);
   const { sendMessage, receiveMessage } = useContext(SocketContext);
   const { user } = useContext(UserDataContext);
+  const { socket } = useContext(SocketContext);
+  const [zoom, setZoom] = useState(true);
+
   useEffect(() => {
-    // console.log("User:", user);
+    // Join the socket room
     sendMessage("join", { userType: "user", userId: user._id });
-  }, []);
+
+    // Listen for ride-confirmed event
+    receiveMessage("ride-confirmed", (data) => {
+      // console.log("Ride Confirmed:", data);
+      setRide(data);
+      // console.log(ride);
+      setLookingDriver(false);
+      setWaitingDriver(true);
+    });
+    receiveMessage("ride-started", (data) => {
+      console.log("Ride Started:", data);
+      setWaitingDriver(false);
+      navigate("/riding");
+    });
+  }, [sendMessage, receiveMessage, user._id]);
+
+  // socket.on("ride-confirmed", (data) => {
+  //   console.log("Ride Confirmed:", data);
+  //   setLookingDriver(false);
+  //   setWaitingDriver(true);
+  // });
 
   const fetchSuggestions = async (query, type) => {
     try {
@@ -218,11 +245,21 @@ function Home() {
       />
       <div className="h-screen w-screen">
         {/* image for temp use */}
-        <img
+        {/* <img
           className="h-full w-full object-cover"
           src="https://miro.medium.com/v2/resize:fit:1400/0*gwMx05pqII5hbfmX.gif"
           alt=""
-        />
+        /> */}
+        {/* <button
+          onClick={() => {
+            setZoom(!zoom);
+            // console.log(zoom);
+          }}
+          className="fixed z-index-5 h-10 w-10 flex items-center justify-center bg-white  top-2 right-2 z-50 "
+        >
+          <i className=" text-lg font-semibold ri-logout-circle-r-line"></i>
+        </button> */}
+        <LiveTracking zoom={zoom} />
       </div>
       <div className="flex flex-col justify-end h-screen absolute top-0 w-full ">
         <div className="h-[30%] p-6 bg-white relative">
@@ -332,6 +369,7 @@ function Home() {
         />
       </div>
       <WaitingForDriver
+        ride={ride}
         setLookingDriver={setLookingDriver}
         waitingForDriverRef={waitingForDriverRef}
       />

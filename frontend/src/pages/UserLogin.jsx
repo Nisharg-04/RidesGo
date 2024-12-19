@@ -44,7 +44,7 @@ const UserLogin = () => {
             className="bg-[#eeeeee] mb-7 rounded px-4 py-2 border w-full text-lg placeholder:text-base "
             type="email"
             name=""
-            id=""
+            id="email"
             placeholder="email@example.com"
             required
           />
@@ -55,7 +55,7 @@ const UserLogin = () => {
             className="bg-[#eeeeee] mb-7 rounded px-4 py-2 border w-full text-lg  placeholder:text-base"
             type="password"
             name=""
-            id=""
+            id="password"
             placeholder="password"
             required
           />

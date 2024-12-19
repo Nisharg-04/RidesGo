@@ -1,4 +1,7 @@
 const axios = require("axios");
+const captainModel = require("../models/captain.model");
+const RideModel = require("../models/ride.model");
+
 module.exports.getAddressCoordinates = async (address) => {
   const apiKey = process.env.GOOGLE_MAPS_API_KEY;
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
@@ -6,10 +9,10 @@ module.exports.getAddressCoordinates = async (address) => {
   )}&key=${apiKey}`;
   try {
     const response = await axios.get(url);
-    console.log(response.data);
+    // console.log(response.data);
     if (response.data.status == "OK") {
       const { lat, lng } = response.data.results[0].geometry.location;
-      return { lat, lng };
+      return { ltd: lat, lng };
     } else {
       throw new Error("Unable to fetch data");
     }
@@ -53,3 +56,23 @@ module.exports.getAutoCompleteSuggestions = async (input) => {
     throw new Error("Error fetching data");
   }
 };
+
+module.exports.getCaptainsInRadius = async (ltd, lng, radius) => {
+  try {
+    // console.log(ltd, lng, radius);
+    // Find captains within the radius
+    const captains = await captainModel.find({
+      location: {
+        $geoWithin: {
+          $centerSphere: [[lng, ltd], radius],
+        },
+      },
+    });
+
+    return captains;
+  } catch (error) {
+    console.log("Error fetching captains in radius:", error);
+    throw new Error("Error fetching captains in radius");
+  }
+};
+

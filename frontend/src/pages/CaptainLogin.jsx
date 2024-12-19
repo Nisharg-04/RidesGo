@@ -16,8 +16,10 @@ const CaptainLogin = () => {
       `${import.meta.env.VITE_BASE_URL}/captains/login`,
       loginUser
     );
+    // console.log(response);
     if (response.status == 200) {
       setCaptain(response.data.captain);
+      // console.log(response.data);
       localStorage.setItem("token", response.data.token);
       navigate("/captain-home");
     }
@@ -39,12 +41,13 @@ const CaptainLogin = () => {
         >
           <h3 className="text-xl font-medium mb-2">What's Your email</h3>
           <input
+            id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="bg-[#eeeeee] mb-7 rounded px-4 py-2 border w-full text-lg placeholder:text-base "
             type="email"
             name=""
-            id=""
+         
             placeholder="email@example.com"
             required
           />
@@ -55,7 +58,7 @@ const CaptainLogin = () => {
             className="bg-[#eeeeee] mb-7 rounded px-4 py-2 border w-full text-lg  placeholder:text-base"
             type="password"
             name=""
-            id=""
+            id="password"
             placeholder="password"
             required
           />

@@ -21,7 +21,7 @@ export const CaptainProtectedWrapper = ({ children }) => {
     })
     .then((res) => {
       setCaptain(res.data);
-      if (res.data.captain === null) {
+      if (res.data === null) {
         navigate("/captain-login");
       }
       setIsloding(false);

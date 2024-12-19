@@ -15,6 +15,7 @@ const initializeSocket = (server) => {
     console.log(`Socket connected: ${socket.id}`);
 
     socket.on("join", async (data) => {
+      console.log(data)
       const { userId, userType } = data;
       console.log(`User ${userId} joined as ${userType}`);
       if (userType === "user") {
@@ -22,9 +23,29 @@ const initializeSocket = (server) => {
         user.socketId = socket.id;
         await user.save();
       } else if (userType === "captain") {
+    
         const captain = await captainModel.findById(userId);
+        
         captain.socketId = socket.id;
         await captain.save();
+      }
+    });
+
+    socket.on("update-location-captain", async (data) => {
+      const { userId, userType, location } = data;
+      console.log(data)
+      if (!location.ltd || !location.lng) {
+        return;
+      }
+      console.log(`User ${userId} updated location as ${location}`);
+      if (userType === "captain") {
+        const captain = await captainModel.findByIdAndUpdate(userId, {
+          location: {
+            type: "Point",
+            coordinates: [location.lng, location.ltd],
+          },
+        });
+        // await captain.save();
       }
     });
 
