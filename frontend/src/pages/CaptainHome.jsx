@@ -108,7 +108,6 @@ const CaptainHome = () => {
     );
     console.log(response.data.ride);
     setRidec(response.data.ride);
- 
   }
 
   useGSAP(
@@ -160,7 +159,7 @@ const CaptainHome = () => {
           src="https://miro.medium.com/v2/resize:fit:1400/0*gwMx05pqII5hbfmX.gif"
           alt=""
         /> */}
-        <LiveTracking/>
+        <LiveTracking />
       </div>
       <div className=" h-[40%] w-screen flex flex-col justify-start gap-5 items-center fixed bottom-0 p-2 bg-white">
         <CaptainDetails />

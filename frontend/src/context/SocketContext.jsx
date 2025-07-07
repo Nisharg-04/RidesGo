@@ -59,8 +59,6 @@ const SocketProvider = ({ children }) => {
     }
   };
 
-  // You can add more functions as needed
-
   return (
     <SocketContext.Provider value={{ sendMessage, receiveMessage, socket }}>
       {children}
@@ -69,23 +67,3 @@ const SocketProvider = ({ children }) => {
 };
 
 export default SocketProvider;
-
-// import React, { createContext, useEffect } from 'react';
-// import { io } from 'socket.io-client';
-
-// export const SocketContext = createContext();
-
-// const socket = io(`${import.meta.env.VITE_BASE_URL}`); // Replace with your server URL
-
-// const SocketProvider = ({ children }) => {
-//     useEffect(() => {
-//         // Basic connection logic
-//         socket.on('connect', () => {
-//             console.log('Connected to server');
-//         });
-
-//         socket.on('disconnect', () => {
-//             console.log('Disconnected from server');
-//         });
-
-//     }, []);

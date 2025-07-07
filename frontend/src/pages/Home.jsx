@@ -41,12 +41,14 @@ function Home() {
   const [zoom, setZoom] = useState(true);
 
   useEffect(() => {
-    // Join the socket room
+    console.log("User data:", user);
+    console.log("Socket connected:", socket?.connected);
+  }, [user, socket]);
+
+  useEffect(() => {
     sendMessage("join", { userType: "user", userId: user._id });
 
-    // Listen for ride-confirmed event
     receiveMessage("ride-confirmed", (data) => {
-      // console.log("Ride Confirmed:", data);
       setRide(data);
       // console.log(ride);
       setLookingDriver(false);
@@ -57,13 +59,7 @@ function Home() {
       setWaitingDriver(false);
       navigate("/riding");
     });
-  }, [sendMessage, receiveMessage, user._id]);
-
-  // socket.on("ride-confirmed", (data) => {
-  //   console.log("Ride Confirmed:", data);
-  //   setLookingDriver(false);
-  //   setWaitingDriver(true);
-  // });
+  }, [sendMessage, receiveMessage, user._id, navigate]);
 
   const fetchSuggestions = async (query, type) => {
     try {
@@ -191,20 +187,24 @@ function Home() {
   };
 
   const createRide = async () => {
-    const response = await axios.post(
-      `${import.meta.env.VITE_BASE_URL}/rides/create-ride`,
-      {
-        pickup: pickUp,
-        destination,
-        vehicleType,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/rides/create-ride`,
+        {
+          pickup: pickUp,
+          destination,
+          vehicleType,
         },
-      }
-    );
-    // console.log(response.data);
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log("Ride created:", response.data);
+    } catch (error) {
+      console.error("Error creating ride:", error);
+    }
   };
 
   useGSAP(
@@ -239,26 +239,12 @@ function Home() {
   return (
     <div className="h-screen relative overflow-hidden">
       <img
-        className=" absolute left-5 top-5 w-20"
-        src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png"
-        alt=""
+        className="absolute left-5 top-5 w-20 z-50"
+        src="logo.png"
+        alt="Logo"
       />
+
       <div className="h-screen w-screen">
-        {/* image for temp use */}
-        {/* <img
-          className="h-full w-full object-cover"
-          src="https://miro.medium.com/v2/resize:fit:1400/0*gwMx05pqII5hbfmX.gif"
-          alt=""
-        /> */}
-        {/* <button
-          onClick={() => {
-            setZoom(!zoom);
-            // console.log(zoom);
-          }}
-          className="fixed z-index-5 h-10 w-10 flex items-center justify-center bg-white  top-2 right-2 z-50 "
-        >
-          <i className=" text-lg font-semibold ri-logout-circle-r-line"></i>
-        </button> */}
         <LiveTracking zoom={zoom} />
       </div>
       <div className="flex flex-col justify-end h-screen absolute top-0 w-full ">
